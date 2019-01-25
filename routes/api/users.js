@@ -11,7 +11,7 @@ const User = require("../../models/User");
 // @access  Public
 router.get("/test", (req, res) => res.json({ msg: "Users working" }));
 
-// @route   GET api/users/register
+// @route   POST api/users/register
 // @desc    Register a user
 // @access  Public
 router.post("/register", (req, res) => {
@@ -35,10 +35,36 @@ router.post("/register", (req, res) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
           newUser.password = hash;
-          newUser.save().then(user => res.json(user)).catch((err=>console.log(err)));
+          newUser
+            .save()
+            .then(user => res.json(user))
+            .catch(err => console.log(err));
         });
       });
     }
+  });
+});
+
+// @route   GET api/users/login
+// @desc    Login User / Return JWT Token
+// @access  Public
+router.post("/login", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  // Find user by email
+  User.findOne({ email: email }).then(user => {
+    // Check to make sure findOne returned a user
+    if (!user) {
+      return res.status(404).json({ email: "User not found" });
+    }
+    // Check password
+    bcrypt.compare(password, user.password).then(isMatch => {
+      if (isMatch) {
+        res.json({ msg: "Success." });
+      } else {
+        return res.status(400).json({ password: "Password incorrect." });
+      }
+    });
   });
 });
 
