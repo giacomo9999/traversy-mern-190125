@@ -30,7 +30,7 @@ mongoose
 app.use(passport.initialize());
 
 // Passport config
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 
 // use routes
 app.use("/api/users", users);
