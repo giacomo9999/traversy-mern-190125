@@ -6,6 +6,7 @@ const passport = require("passport");
 const users = require("./routes/api/users");
 const posts = require("./routes/api/posts");
 const profiles = require("./routes/api/profiles");
+
 const app = express();
 
 // Body parser middleware
