@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
 
-
 // load User model
 const User = require("../../models/User");
 
@@ -66,7 +65,7 @@ router.post("/login", (req, res) => {
       if (isMatch) {
         // user match
         const payload = { id: user.id, name: user.name, avatar: user.avatar };
-        
+
         // sign token
         jwt.sign(
           payload,
@@ -91,7 +90,7 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    res.json({ msg: "Success!" });
+    res.json({ msg: "I Like Cabbage!" });
   }
 );
 
