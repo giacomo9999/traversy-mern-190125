@@ -90,7 +90,7 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    res.json({ msg: "I Like Cabbage!" });
+    res.json(req.user);
   }
 );
 
